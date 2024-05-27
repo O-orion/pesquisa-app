@@ -1,8 +1,6 @@
 import {
   ScrollView,
-  Text,
   View,
-  Box,
   Icon,
   Select,
   Modal,
@@ -12,7 +10,6 @@ import {
   Radio,
 } from "native-base";
 import { Fab } from "native-base";
-import { TEMAS } from "../styles/temas";
 import { FontAwesome } from "@expo/vector-icons";
 import { useState } from "react";
 import Cabecalho from "../components/BoxCabecalho";
@@ -65,8 +62,8 @@ export default function Home() {
   return (
     <View p={4} flex={1}>
       <Cabecalho></Cabecalho>
-
       <ListSearchs></ListSearchs>
+
       <Fab
         onPress={openModal}
         mb={4}
@@ -186,6 +183,7 @@ export default function Home() {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
+
     </View>
   );
 }
