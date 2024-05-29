@@ -1,24 +1,15 @@
-import {
-  ScrollView,
-  View,
-  Icon,
-  Select,
-  Modal,
-  FormControl,
-  Input,
-  Button,
-  Radio,
-} from "native-base";
+import { View, Icon } from "native-base";
 import { Fab } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
 import { useState } from "react";
 import Cabecalho from "../components/BoxCabecalho";
 import ListSearchs from "../components/ListSearchs";
 import FormPesquisa from "../components/FormPesquisa";
+import ModalComponent from "../components/ModalComponent";
 
 type SearchItem = {
-  id:number
-  name: string,
+  id: number;
+  name: string;
   age: string;
   sexo: string;
   ocupacao: string;
@@ -27,7 +18,6 @@ type SearchItem = {
 };
 
 export default function Home() {
-
   const [searchs, setSearch] = useState<SearchItem[]>([]);
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -39,14 +29,15 @@ export default function Home() {
     setModalVisible(false);
   }
 
-  function saveSearch() {
-    
+  function saveSearch(newSearch: SearchItem) {
+    setSearch((prevSearchs) => [...prevSearchs, newSearch]);
+    closeModal();
   }
 
   return (
     <View p={4} flex={1}>
       <Cabecalho></Cabecalho>
-      <ListSearchs searchs={searchs} ></ListSearchs>
+      <ListSearchs searchs={searchs}></ListSearchs>
 
       <Fab
         onPress={openModal}
@@ -57,7 +48,11 @@ export default function Home() {
         icon={<Icon as={FontAwesome} name="plus" size="sm"></Icon>}
       ></Fab>
 
-      <FormPesquisa isVisible={isModalVisible}  closeModal={closeModal}></FormPesquisa>
+      {isModalVisible && (
+        <ModalComponent titulo="Pesquisa" isVisible={isModalVisible} closeModal={closeModal}>
+          <FormPesquisa  saveSearch={saveSearch} closeModal={closeModal}></FormPesquisa>
+        </ModalComponent>
+      )}
     </View>
   );
 }
