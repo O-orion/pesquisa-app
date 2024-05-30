@@ -10,7 +10,7 @@ import {
   ScrollView,
   Select,
 } from "native-base";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
 type SearchItem = {
@@ -25,10 +25,11 @@ type SearchItem = {
 
 type Props = {
   closeModal: () => void;
+  search?: SearchItem,
   saveSearch: (search: SearchItem) => void;
 };
 
-export default function FormPesquisa({ closeModal, saveSearch }: Props) {
+export default function FormPesquisa({ closeModal, saveSearch, search }: Props) {
   const [sexo, setSexo] = useState("");
   const [name, setName] = useState("");
   const [age, setIdade] = useState("");
@@ -36,6 +37,18 @@ export default function FormPesquisa({ closeModal, saveSearch }: Props) {
   const [vereador, setVereador] = useState("");
   const [voto, setVoto] = useState("");
   const [countId, setCountId] = useState(0);
+
+
+  useEffect(() => {
+    if (search) {
+        setName(search.name);
+        setIdade(search.age);
+        setSexo(search.sexo);
+        setOcupacao(search.ocupacao);
+        setVereador(search.vereador);
+        setVoto(search.voto);
+    }
+}, [search]);
 
   function onChangeTextAge(value: string) {
     setIdade(value);
@@ -72,6 +85,7 @@ export default function FormPesquisa({ closeModal, saveSearch }: Props) {
       <FormControl>
         <FormControl.Label>Nome</FormControl.Label>
         <Input
+          value={name}
           onChangeText={onChangeTextName}
           keyboardType="ascii-capable"
           placeholder="Informe sEU NOME"
@@ -80,6 +94,7 @@ export default function FormPesquisa({ closeModal, saveSearch }: Props) {
       <FormControl>
         <FormControl.Label>Idade</FormControl.Label>
         <Input
+          value={age}
           onChangeText={onChangeTextAge}
           keyboardType="numeric"
           placeholder="Informe sua idade"

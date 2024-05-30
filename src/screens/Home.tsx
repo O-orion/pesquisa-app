@@ -34,10 +34,19 @@ export default function Home() {
     closeModal();
   }
 
+  function editSearchInList(search: SearchItem) {
+    setSearch(
+      searchs.map( (item) => {
+        item == search
+        return search
+      })
+    )
+  }
+
   return (
     <View p={4} flex={1}>
       <Cabecalho></Cabecalho>
-      <ListSearchs searchs={searchs}></ListSearchs>
+      <ListSearchs editSearchInList={editSearchInList} searchs={searchs}></ListSearchs>
 
       <Fab
         onPress={openModal}

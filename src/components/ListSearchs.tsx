@@ -11,6 +11,8 @@ import {
 } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
 import { TEMAS } from "../styles/temas";
+import { useState } from "react";
+import EditSearch from "./EditSearch";
 
 interface Search {
   id: number,
@@ -24,15 +26,30 @@ interface Search {
 
 interface Props {
   searchs: Search[]; // Supondo que SearchItem seja o tipo dos itens na lista
+  editSearchInList: (search: Search) =>  void;
 }
 
-export default function ListSearchs(searchList : Props) {
+export default function ListSearchs({searchs, editSearchInList  } : Props) {
 
-  const data = searchList.searchs;
+
+  const [editSearch, setEditSearch] = useState<boolean>(false)
+  const [selectedSearch, setSelectedSearch] = useState<Search>()
+  
+  const data = searchs;
 
   function exibirSearch(search: Search) {
-    console.log(search)
+    setSelectedSearch(search);
+    // editSearchInList(search)
+    setEditSearch(true)
+    console.log('ee')
+    console.log(selectedSearch)
+    console.log('ee')
   }
+
+  function closeModalEdit() {
+    setEditSearch(false)
+  }
+
 
   return (
     <Box>
@@ -136,6 +153,10 @@ export default function ListSearchs(searchList : Props) {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
+
+      {
+        editSearch && <EditSearch selectedSearch={selectedSearch} closeModal={closeModalEdit} isVisibleModal={editSearch} ></EditSearch>
+      }
     </Box>
   );
 }
