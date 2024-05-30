@@ -30,6 +30,10 @@ export default function ListSearchs(searchList : Props) {
 
   const data = searchList.searchs;
 
+  function exibirSearch(search: Search) {
+    console.log(search)
+  }
+
   return (
     <Box>
       <Heading color={TEMAS.colors.gray[500]} fontSize="sm" pb="1">
@@ -106,6 +110,7 @@ export default function ListSearchs(searchList : Props) {
                         size: "2xl",
                       },
                     }}
+                    onPress={ () => exibirSearch(item)}
                   />
                   <IconButton
                     icon={<Icon as={FontAwesome} name="trash" />}
@@ -122,6 +127,7 @@ export default function ListSearchs(searchList : Props) {
                         size: "2xl",
                       },
                     }}
+                    
                   />
                 </Box>
               </Box>
