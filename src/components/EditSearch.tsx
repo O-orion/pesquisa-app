@@ -3,45 +3,54 @@ import ModalComponent from "./ModalComponent";
 import FormPesquisa from "./FormPesquisa";
 
 interface Search {
-    id: number,
-    name: string,
-    age: string;
-    sexo: string;
-    ocupacao: string;
-    vereador: string;
-    voto: string;
+  id: number;
+  name: string;
+  age: string;
+  sexo: string;
+  ocupacao: string;
+  vereador: string;
+  voto: string;
+}
+
+interface Props {
+  closeModal: () => void;
+  isVisibleModal: boolean;
+  selectedSearch?: Search;
+  saveNewSearch: (search: Search) => void
+}
+
+export default function EditSearch({
+  isVisibleModal,
+  closeModal,
+  selectedSearch,
+  saveNewSearch
+}: Props) {
+  const [isVisible, setModalVisible] = useState(isVisibleModal);
+
+  function openModal() {
+    setModalVisible(true);
   }
 
-  interface Props {
-    closeModal: () => void,
-    isVisibleModal: boolean,
-    selectedSearch?: Search
+  function closeModalEdit() {
+    setModalVisible(false);
+    closeModal();
   }
-  
 
-export default function EditSearch({ isVisibleModal, closeModal, selectedSearch }: Props) {
-    const [ isVisible, setModalVisible] = useState(isVisibleModal)
+  function saveSearch(search: Search) {
+    saveNewSearch(search)
+  }
 
-    console.log('oiii')
-    console.log(selectedSearch)
-    console.log('oiii')
-
-    function openModal() {
-        setModalVisible(true);
-      }
-    
-      function closeModalEdit() {
-        setModalVisible(false);
-        closeModal()
-      }
-
-      function saveSearch(search: Search) {
-        console.log(search)
-      }
-
-    return (
-        <ModalComponent titulo="Editar Pesquisa" closeModal={closeModalEdit} isVisible={isVisible} >
-            <FormPesquisa search={selectedSearch}  saveSearch={saveSearch} closeModal={closeModalEdit}></FormPesquisa>
-        </ModalComponent>
-    )
+  return (
+    <ModalComponent
+      titulo="Editar Pesquisa"
+      closeModal={closeModalEdit}
+      isVisible={isVisible}
+    >
+      <FormPesquisa
+        search={selectedSearch}
+        saveSearch={saveSearch}
+        closeModal={closeModalEdit}
+      ></FormPesquisa>
+    </ModalComponent>
+  );
 }

@@ -15,8 +15,8 @@ import { useState } from "react";
 import EditSearch from "./EditSearch";
 
 interface Search {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
   age: string;
   sexo: string;
   ocupacao: string;
@@ -26,30 +26,31 @@ interface Search {
 
 interface Props {
   searchs: Search[]; // Supondo que SearchItem seja o tipo dos itens na lista
-  editSearchInList: (search: Search) =>  void;
+  editSearchInList: (search: Search) => void;
 }
 
-export default function ListSearchs({searchs, editSearchInList  } : Props) {
+export default function ListSearchs({ searchs, editSearchInList }: Props) {
+  const [editSearch, setEditSearch] = useState<boolean>(false);
+  const [selectedSearch, setSelectedSearch] = useState<Search>();
 
-
-  const [editSearch, setEditSearch] = useState<boolean>(false)
-  const [selectedSearch, setSelectedSearch] = useState<Search>()
-  
   const data = searchs;
 
   function exibirSearch(search: Search) {
     setSelectedSearch(search);
     // editSearchInList(search)
-    setEditSearch(true)
-    console.log('ee')
-    console.log(selectedSearch)
-    console.log('ee')
+    setEditSearch(true);
+    console.log("ee");
+    console.log(selectedSearch);
+    console.log("ee");
   }
 
   function closeModalEdit() {
-    setEditSearch(false)
+    setEditSearch(false);
   }
 
+  function saveSearchEdit(search: Search) {
+    editSearchInList(search)
+  }
 
   return (
     <Box>
@@ -109,7 +110,7 @@ export default function ListSearchs({searchs, editSearchInList  } : Props) {
                   color="coolGray.800"
                   alignSelf="flex-start"
                 >
-                  {'11:00 PM'}
+                  {"11:00 PM"}
                 </Text>
                 <Box display="flex" flexDir="row">
                   <IconButton
@@ -127,7 +128,7 @@ export default function ListSearchs({searchs, editSearchInList  } : Props) {
                         size: "2xl",
                       },
                     }}
-                    onPress={ () => exibirSearch(item)}
+                    onPress={() => exibirSearch(item)}
                   />
                   <IconButton
                     icon={<Icon as={FontAwesome} name="trash" />}
@@ -144,7 +145,6 @@ export default function ListSearchs({searchs, editSearchInList  } : Props) {
                         size: "2xl",
                       },
                     }}
-                    
                   />
                 </Box>
               </Box>
@@ -154,9 +154,14 @@ export default function ListSearchs({searchs, editSearchInList  } : Props) {
         keyExtractor={(item) => item.id.toString()}
       />
 
-      {
-        editSearch && <EditSearch selectedSearch={selectedSearch} closeModal={closeModalEdit} isVisibleModal={editSearch} ></EditSearch>
-      }
+      {editSearch && (
+        <EditSearch
+          saveNewSearch={saveSearchEdit}
+          selectedSearch={selectedSearch}
+          closeModal={closeModalEdit}
+          isVisibleModal={editSearch}
+        ></EditSearch>
+      )}
     </Box>
   );
 }

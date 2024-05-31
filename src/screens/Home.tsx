@@ -37,7 +37,7 @@ export default function Home() {
   function editSearchInList(search: SearchItem) {
     setSearch(
       searchs.map( (item) => {
-        item == search
+        item.id == search.id
         return search
       })
     )

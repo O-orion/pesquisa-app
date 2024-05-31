@@ -3,6 +3,7 @@ import Home from './src/screens/Home';
 import { TEMAS } from './src/styles/temas';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
+import Menu from './src/components/Menu';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -52,6 +53,7 @@ export default function App() {
   return (
     <NativeBaseProvider theme={TEMAS}>
       <StatusBar backgroundColor={TEMAS.colors.blue[500]} />
+      <Menu></Menu>
       <Home />
     </NativeBaseProvider>
   );
