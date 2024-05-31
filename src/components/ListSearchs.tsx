@@ -13,6 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TEMAS } from "../styles/temas";
 import { useState } from "react";
 import EditSearch from "./EditSearch";
+import DeleteSearch from "./DeleteSearch";
 
 interface Search {
   id: number;
@@ -31,25 +32,35 @@ interface Props {
 
 export default function ListSearchs({ searchs, editSearchInList }: Props) {
   const [editSearch, setEditSearch] = useState<boolean>(false);
+  const [deletSearch, setDeletSearch] = useState<boolean>(false);
   const [selectedSearch, setSelectedSearch] = useState<Search>();
 
   const data = searchs;
 
   function exibirSearch(search: Search) {
     setSelectedSearch(search);
-    // editSearchInList(search)
     setEditSearch(true);
-    console.log("ee");
-    console.log(selectedSearch);
-    console.log("ee");
+  }
+
+  function openModalDelete(search: Search) {
+    setDeletSearch(true)
+    setSelectedSearch(search)
   }
 
   function closeModalEdit() {
     setEditSearch(false);
   }
 
+  function closeModalDelet() {
+    setDeletSearch(false)
+  }
+
   function saveSearchEdit(search: Search) {
     editSearchInList(search)
+  }
+
+  function deleteSearch(id?: number) {
+
   }
 
   return (
@@ -131,6 +142,7 @@ export default function ListSearchs({ searchs, editSearchInList }: Props) {
                     onPress={() => exibirSearch(item)}
                   />
                   <IconButton
+                  onPress={ () => openModalDelete(item) }
                     icon={<Icon as={FontAwesome} name="trash" />}
                     borderRadius="full"
                     _icon={{
@@ -162,6 +174,13 @@ export default function ListSearchs({ searchs, editSearchInList }: Props) {
           isVisibleModal={editSearch}
         ></EditSearch>
       )}
+
+      {
+        deletSearch && (
+          <DeleteSearch deletSearch={deleteSearch} closeModal={closeModalDelet} isVisbility={deletSearch} ></DeleteSearch>
+        )
+      }
+
     </Box>
   );
 }
